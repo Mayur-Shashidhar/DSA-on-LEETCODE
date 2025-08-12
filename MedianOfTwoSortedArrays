@@ -4,7 +4,7 @@ The overall run time complexity should be O(log (m+n)).
 
 
 APPROACH:
-Binary Search on the Smaller Array
+Binary Search on the Smaller Array:
 We can think of finding the median as splitting the two arrays into a left half and a right half such that:
 1.All elements in the left half are ≤ all elements in the right half
 2.The size of the left and right halves differ by at most 1
