@@ -1,3 +1,4 @@
+QUESTION:
 Given an array nums of n integers, return an array of all the unique quadruplets [nums[a], nums[b], nums[c], nums[d]] such that:
 0 <= a, b, c, d < n
 a, b, c, and d are distinct.
@@ -6,6 +7,18 @@ You may return the answer in any order.
 
 
 
+APPROACH:
+Sorting + Two Pointers (O(n³))
+We can extend the 3Sum approach:
+1.Sort the array — to easily skip duplicates.
+2.Use two loops for the first two numbers (i, j).
+3.For each pair (i, j):
+    1.Use two-pointer search to find the remaining two numbers making the sum matching the target.
+    2.Skip duplicates for both i and j and also for the inside two-pointer ends.
+4.Store each quadruplet in the results list.
+
+
+CODE:
 #include <stdio.h>
 #include <stdlib.h>
 
