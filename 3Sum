@@ -1,8 +1,25 @@
+QUESTION:
 Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
 Notice that the solution set must not contain duplicate triplets.
 
 
 
+APPROACH:
+Sorting + Two Pointers (O(n²))
+We can solve it efficiently with:
+1.Sort the array → makes duplicate handling easier and allows two-pointer search.
+2.Loop i from 0 → n-3 (fix the first element).
+3.Skip duplicates for the first element (avoid repeating same triplet).
+4.Use two-pointer technique (left at i+1 and right at n-1) to find pairs that sum to -nums[i].
+5.Move pointers:
+    1.If sum is less than target → move left forward.
+    2.If sum is greater than target → move right backward.
+    3.Else → record the triplet and skip duplicates.
+6.Continue until all unique triplets are found.
+
+
+
+CODE:
 #include <stdio.h>
 #include <stdlib.h>
 
