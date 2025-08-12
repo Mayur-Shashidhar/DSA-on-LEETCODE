@@ -1,0 +1,56 @@
+The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+P   A   H   N
+A P L S I I G
+Y   I   R
+And then read line by line: "PAHNAPLSIIGYIR"
+Write the code that will take a string and make this conversion given a number of rows:
+string convert(string s, int numRows);
+ 
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char* convert(char* s, int numRows) {
+    int len = strlen(s);
+    if (numRows == 1 || numRows >= len) {
+        char* res = (char*)malloc((len + 1) * sizeof(char));
+        strcpy(res, s);
+        return res;
+    }
+
+    
+    char** rows = (char**)malloc(numRows * sizeof(char*));
+    int* lengths = (int*)calloc(numRows, sizeof(int)); 
+    for (int i = 0; i < numRows; i++) {
+        rows[i] = (char*)malloc((len + 1) * sizeof(char));
+        rows[i][0] = '\0';
+    }
+
+    int currRow = 0;
+    int goingDown = 0; 
+
+    for (int i = 0; i < len; i++) {
+        int l = lengths[currRow];
+        rows[currRow][l] = s[i];
+        rows[currRow][l + 1] = '\0';
+        lengths[currRow]++;
+
+        if (currRow == 0 || currRow == numRows - 1)
+            goingDown = !goingDown;
+        currRow += goingDown ? 1 : -1;
+    }
+
+    
+    char* result = (char*)malloc((len + 1) * sizeof(char));
+    result[0] = '\0';
+    for (int i = 0; i < numRows; i++) {
+        strcat(result, rows[i]);
+        free(rows[i]);
+    }
+
+    free(rows);
+    free(lengths);
+    return result;
+}
+
