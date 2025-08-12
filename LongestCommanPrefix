@@ -1,8 +1,21 @@
+QUESTION:
 Write a function to find the longest common prefix string amongst an array of strings.
 If there is no common prefix, return an empty string "".
 
 
 
+APPROACH:
+We can solve this in multiple ways, but the simplest and efficient approach is:
+Horizontal Scanning
+1.Assume the first string is the prefix.
+2.Compare it with the next string → shrink the prefix until it matches the start of the next string.
+3.Repeat for all strings in the array.
+4.If at any step the prefix becomes empty → return "".
+👍 Time Complexity: O(S) where S is the sum of all characters in all strings (worst case).
+👍 Space Complexity: O(1) (no extra data, excluding prefix storage).
+
+
+CODE:
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
