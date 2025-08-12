@@ -10,7 +10,7 @@ It’s my personal record of learning, practicing, and improving problem-solving
 - Problems are mostly from **[LeetCode](https://leetcode.com/)**.
 - Covers **Easy**, **Medium**, and **Hard** difficulty levels.
 - Organized by title.
-- Includes question & code.
+- Includes question, approach & code.
 
 ---
 
