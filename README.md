@@ -16,7 +16,7 @@ It’s my personal record of learning, practicing, and improving problem-solving
 
 - **Easy:** Beginner-friendly problems  
 - **Medium:** Intermediate-level problems  
-- **Hard:** Advanced / tricky algorithmic challenges
+- **Hard:** Advanced / tricky algorithmic challenges 
 
 ---
 
