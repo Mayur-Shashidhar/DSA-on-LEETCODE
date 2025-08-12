@@ -2,10 +2,17 @@ QUESTION:
 Given an integer x, return true if x is a palindrome, and false otherwise.
 
 
+
 APPROACH:
-1.Negative numbers are never palindromes (they have a - sign in front).
-2.Numbers ending in 0 are not palindromes unless they are 0 itself (e.g., 10 → false).
-3.To avoid extra space, we can reverse half of the number and compare with the other half — this prevents overflow and avoids converting to a string.
+1.If x < 0 or (x % 10 == 0 and x != 0) → return false.
+2.Reverse the last half of the number:
+    Pop the last digit from x
+    Push it into reversedHalf
+    Stop when x <= reversedHalf.
+3.At the end:
+    If total digits are even → x == reversedHalf
+    If total digits are odd → x == reversedHalf / 10 (middle digit ignored)
+
 
 
 
