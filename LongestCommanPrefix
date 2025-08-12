@@ -1,0 +1,26 @@
+Write a function to find the longest common prefix string amongst an array of strings.
+If there is no common prefix, return an empty string "".
+
+
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+char* longestCommonPrefix(char** strs, int strsSize) {
+    if (strsSize == 0) return "";
+
+    
+    char* prefix = malloc(strlen(strs[0]) + 1);
+    strcpy(prefix, strs[0]);
+
+    for (int i = 1; i < strsSize; i++) {
+        while (strncmp(prefix, strs[i], strlen(prefix)) != 0) {
+            prefix[strlen(prefix) - 1] = '\0'; 
+            if (strlen(prefix) == 0) {
+                return "";
+            }
+        }
+    }
+    return prefix;
+}
