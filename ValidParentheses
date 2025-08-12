@@ -1,3 +1,4 @@
+QUESTION:
 Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
 An input string is valid if:
 Open brackets must be closed by the same type of brackets.
@@ -5,7 +6,19 @@ Open brackets must be closed in the correct order.
 Every close bracket has a corresponding open bracket of the same type.
 
 
+APPROACH:
+Stack
+The stack data structure is perfect for this:
+1.Traverse the string from left to right.
+2.If the character is an opening bracket, push it onto the stack.
+3.If it’s a closing bracket:
+    1.If the stack is empty → invalid (no matching open).
+    2.Pop from the stack and check if it matches the type of closing bracket.
+4.At the end, if the stack is empty, the string is valid, else invalid.
 
+
+
+CODE:
 #include <stdbool.h>
 #include <string.h>
 
