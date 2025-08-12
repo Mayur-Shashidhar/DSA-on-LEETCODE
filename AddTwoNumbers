@@ -1,8 +1,20 @@
+OUESTION:
 You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
 You may assume the two numbers do not contain any leading zero, except the number 0 itself.
 
+APPROACH:
+1.Initialize a dummy head node to simplify list building.
+2.Keep two pointers: one for each linked list (l1, l2).
+3.Maintain a carry variable for sums greater than 9.
+4.In each step:
+    Get the value from l1 and l2 (or 0 if one list is shorter).
+    Sum them with the carry.
+    Create a new node with sum % 10.
+    Update carry to sum / 10.
+5.After processing both lists, if there's a remaining carry, add a new node for it.
 
 
+CODE:
 #include <stdio.h>
 #include <stdlib.h>
 /**
