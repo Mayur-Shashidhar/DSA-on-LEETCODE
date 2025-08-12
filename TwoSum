@@ -4,9 +4,9 @@ You may assume that each input would have exactly one solution, and you may not 
 You can return the answer in any order.
 
 APPROACH:
-*Use two nested loops.
-*For each element, check if there exists another element that sums up to the target.
-*Return the pair of indices when found.
+1.Use two nested loops.
+2.For each element, check if there exists another element that sums up to the target.
+3.Return the pair of indices when found.
 
 CODE:
 #include <stdlib.h>
