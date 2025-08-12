@@ -9,8 +9,8 @@ It’s my personal record of learning, practicing, and improving problem-solving
 ## 📝 About
 - Problems are mostly from **[LeetCode](https://leetcode.com/)**.
 - Covers **Easy**, **Medium**, and **Hard** difficulty levels.
-- Organized by problem number & title.
-- Includes explanation, approach, & well-commented code.
+- Organized by title.
+- Includes question & code.
 
 ---
 
