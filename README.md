@@ -1,7 +1,7 @@
 # 📚 DSA Solutions – LeetCode Practice
 
 Welcome to my **Data Structures & Algorithms** solutions repository!  
-This repo contains my solutions to various **LeetCode** problems, written in **C**.
+This repo contains my solutions to various **LeetCode** problems, written in **C**.<br>
 It’s my personal record of learning, practicing, and improving problem-solving skills.
 
 ---
