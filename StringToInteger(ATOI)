@@ -1,3 +1,4 @@
+QUESTION:
 Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer.
 The algorithm for myAtoi(string s) is as follows:
 Whitespace: Ignore any leading whitespace (" ").
@@ -7,6 +8,18 @@ Rounding: If the integer is out of the 32-bit signed integer range [-231, 231 - 
 Return the integer as the final result.
 
 
+APPROACH:
+1.Skip leading spaces.
+2.Check optional sign ('-' or '+').
+3.Read digits while ignoring non-digit characters after that.
+4.Handle overflow/underflow on the fly
+        If number > INT_MAX, return INT_MAX.
+    If number < INT_MIN, return INT_MIN.
+We’ll do range checking before actually multiplying and adding the next digit to avoid 64-bit operations.
+
+
+
+CODE:
 #include <stdio.h>
 #include <limits.h>
 #include <ctype.h>  // for isspace, isdigit
