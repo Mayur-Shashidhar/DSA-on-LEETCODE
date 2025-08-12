@@ -2,12 +2,12 @@
 
 Welcome to my **Data Structures & Algorithms** solutions repository!  
 This repo contains my solutions to various **LeetCode** problems, written in **C**.
-It’s my personal record of learning, practicing, and improving problem-solving skills.
+It’s my personal record of learning, practicing and improving problem-solving skills.
 
 ---
 
 ## 📝 About
-- Problems are mostly from **[LeetCode](https://leetcode.com/)**.
+- Problems are from **[LeetCode](https://leetcode.com/)**.
 - Covers **Easy**, **Medium**, and **Hard** difficulty levels.
 - Organized by title.
 - Includes question, approach & code.
