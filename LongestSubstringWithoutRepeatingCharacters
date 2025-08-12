@@ -2,7 +2,7 @@ QUESTION:
 Given a string s, find the length of the longest substring without duplicate characters.
 
 APPROACH:
-Sliding Window
+Sliding Window:
 We can solve it in O(n) time using a sliding window and an array/map to store the last index where each character appeared.
 Steps:
 1.Have two pointers, start (start of current window) and i (current char index).
