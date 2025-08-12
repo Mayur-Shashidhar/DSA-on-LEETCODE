@@ -1,0 +1,90 @@
+QUESTION:
+You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.
+Merge all the linked-lists into one sorted linked-list and return it.
+
+
+
+APPROACH:
+Min-Heap / Priority Queue – O(n·log k)
+1.Put the head of each list in a min-heap (priority queue) based on node value.
+2.Repeatedly pop the smallest node, then push its next node.
+3.Very clean and efficient.
+
+
+CODE:
+#include<stdio.h>
+#include <stdlib.h>
+
+
+typedef struct {
+    struct ListNode **data;
+    int size;
+    int capacity;
+} MinHeap;
+
+void heap_swap(struct ListNode **a, struct ListNode **b) {
+    struct ListNode *tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+void heap_push(MinHeap *heap, struct ListNode *node) {
+    heap->data[heap->size++] = node;
+    int i = heap->size - 1;
+    while (i > 0) {
+        int parent = (i - 1) / 2;
+        if (heap->data[parent]->val > heap->data[i]->val) {
+            heap_swap(&heap->data[parent], &heap->data[i]);
+            i = parent;
+        } else break;
+    }
+}
+
+struct ListNode* heap_pop(MinHeap *heap) {
+    if (heap->size == 0) return NULL;
+    struct ListNode *top = heap->data[0];
+    heap->data[0] = heap->data[--heap->size];
+    int i = 0;
+    while (1) {
+        int left = 2 * i + 1, right = 2 * i + 2, smallest = i;
+        if (left < heap->size && heap->data[left]->val < heap->data[smallest]->val)
+            smallest = left;
+        if (right < heap->size && heap->data[right]->val < heap->data[smallest]->val)
+            smallest = right;
+        if (smallest != i) {
+            heap_swap(&heap->data[i], &heap->data[smallest]);
+            i = smallest;
+        } else break;
+    }
+    return top;
+}
+
+struct ListNode* mergeKLists(struct ListNode** lists, int listsSize) {
+    if (listsSize == 0) return NULL;
+
+    
+    MinHeap heap;
+    heap.data = malloc(listsSize * sizeof(struct ListNode*));
+    heap.size = 0;
+    heap.capacity = listsSize;
+
+    
+    for (int i = 0; i < listsSize; i++) {
+        if (lists[i]) heap_push(&heap, lists[i]);
+    }
+
+    struct ListNode dummy;
+    struct ListNode *tail = &dummy;
+    dummy.next = NULL;
+
+    
+    while (heap.size > 0) {
+        struct ListNode *minNode = heap_pop(&heap);
+        tail->next = minNode;
+        tail = tail->next;
+        if (minNode->next) heap_push(&heap, minNode->next);
+    }
+
+    free(heap.data);
+    return dummy.next;
+}
