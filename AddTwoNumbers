@@ -7,10 +7,10 @@ APPROACH:
 2.Keep two pointers: one for each linked list (l1, l2).
 3.Maintain a carry variable for sums greater than 9.
 4.In each step:
-    Get the value from l1 and l2 (or 0 if one list is shorter).
-    Sum them with the carry.
-    Create a new node with sum % 10.
-    Update carry to sum / 10.
+    1.Get the value from l1 and l2 (or 0 if one list is shorter).
+    2.Sum them with the carry.
+    3.Create a new node with sum % 10.
+    4.Update carry to sum / 10.
 5.After processing both lists, if there's a remaining carry, add a new node for it.
 
 
