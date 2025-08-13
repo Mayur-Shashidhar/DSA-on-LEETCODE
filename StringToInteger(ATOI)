@@ -22,12 +22,12 @@ We’ll do range checking before actually multiplying and adding the next digit 
 CODE:
 #include <stdio.h>
 #include <limits.h>
-#include <ctype.h>  // for isspace, isdigit
+#include <ctype.h>  
 
 int myAtoi(char *s) {
     int i = 0;
     int sign = 1;
-    long result = 0;  // use long during calc to detect overflow early
+    long result = 0;  
 
     
     while (isspace((unsigned char)s[i])) {
