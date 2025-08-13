@@ -1,0 +1,114 @@
+QUESTION:
+Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane, return the maximum number of points that lie on the same straight line.
+
+
+
+APPROACH:
+1.Iterate through each point as a reference point i.
+2.For each point i, calculate the slope it forms with every other point j > i.
+3.Use a hash map (dictionary) to count how many points share the same slope with point i. Points with the same slope from i are collinear with i.
+4.Handle special cases:
+  1.Overlapping points (exact same coordinates) — count them separately.
+  2.Vertical lines where the slope is undefined (dx == 0) — treat separately.
+5.Represent slopes as reduced fractions (dy, dx) instead of floating-point to avoid precision issues:
+  1.Compute dy = y2 - y1 and dx = x2 - x1.
+  2.Reduce (dy, dx) by their greatest common divisor (GCD).
+  3.Normalize signs so that dx is always positive for unique representation.
+6.For each reference point, the maximum count of a slope + overlap + 1 (the point itself) is the maximum points on a line passing through that point.
+7.Return the maximum of these maximum counts over all points.
+
+
+
+CODE:
+#include <stdio.h>
+#include <stdlib.h>
+
+int gcd(int a, int b) {
+    // Compute gcd of two numbers (absolute values)
+    if (b == 0) return a;
+    return gcd(b, a % b);
+}
+
+int maxPoints(int** points, int pointsSize, int* pointsColSize) {
+    if (pointsSize <= 2) return pointsSize;
+    
+    int maxPointsOnLine = 0;
+
+    for (int i = 0; i < pointsSize; i++) {
+        int overlap = 0;
+        int vertical = 0;
+        int curMax = 0;
+
+        // Use a hash map key'ed by pair (dy, dx) to count slopes
+        // We implement this with a simple array of structs or a hash,
+        // but for simplicity, define an array of slopes and counts
+
+        // For simplicity and performance, a large enough map can be used,
+        // but here we use a simple dynamic structure as demonstration:
+        // A pair of arrays to store distinct slopes and their counts
+        int slopeCountCapacity = pointsSize;
+        int *dyArray = (int *)malloc(slopeCountCapacity * sizeof(int));
+        int *dxArray = (int *)malloc(slopeCountCapacity * sizeof(int));
+        int *countArray = (int *)malloc(slopeCountCapacity * sizeof(int));
+        int uniqueSlopes = 0;
+
+        for (int j = i + 1; j < pointsSize; j++) {
+            int dx = points[j][0] - points[i][0];
+            int dy = points[j][1] - points[i][1];
+
+            if (dx == 0 && dy == 0) {
+                // Overlapping point
+                overlap++;
+            } else if (dx == 0) {
+                // Vertical line
+                vertical++;
+                if (vertical > curMax)
+                    curMax = vertical;
+            } else {
+                // Reduce dy and dx by their gcd
+                int g = gcd(abs(dy), abs(dx));
+                dy /= g;
+                dx /= g;
+
+                // Normalize so dx is positive for uniqueness
+                if (dx < 0) {
+                    dx = -dx;
+                    dy = -dy;
+                }
+
+                // Check if slope already seen
+                int found = 0;
+                for (int k = 0; k < uniqueSlopes; k++) {
+                    if (dyArray[k] == dy && dxArray[k] == dx) {
+                        countArray[k]++;
+                        if (countArray[k] > curMax)
+                            curMax = countArray[k];
+                        found = 1;
+                        break;
+                    }
+                }
+
+                // New slope
+                if (!found) {
+                    dyArray[uniqueSlopes] = dy;
+                    dxArray[uniqueSlopes] = dx;
+                    countArray[uniqueSlopes] = 1;
+                    if (1 > curMax)
+                        curMax = 1;
+                    uniqueSlopes++;
+                }
+            }
+        }
+
+        free(dyArray);
+        free(dxArray);
+        free(countArray);
+
+        // Include the base point itself and overlapping points
+        if (curMax + overlap + 1 > maxPointsOnLine) {
+            maxPointsOnLine = curMax + overlap + 1;
+        }
+    }
+
+    return maxPointsOnLine;
+}
