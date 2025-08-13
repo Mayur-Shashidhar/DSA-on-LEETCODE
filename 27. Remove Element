@@ -1,0 +1,39 @@
+QUESTION:
+Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The order of the elements may be changed. Then return the number of elements in nums which are not equal to val.
+Consider the number of elements in nums which are not equal to val be k, to get accepted, you need to do the following things:
+  Change the array nums such that the first k elements of nums contain the elements which are not equal to val. The remaining elements of nums are not important as well as the size of nums.
+  Return k.
+
+
+
+APPROACH:
+Two Pointers (Swap to End)
+Since we don’t care about the order of the remaining elements, the most optimal approach is:
+1.Use two pointers:
+    i → current index scanning through the array.
+    n → current “effective array size” (initially numsSize).
+2.While i < n:
+    If nums[i] == val:
+      Swap nums[i] with nums[n-1]
+      Decrease n (ignore last position)
+    Else → i++ (move to next element)
+3.At the end, n is the count of elements not equal to val.
+4.The first n elements of nums are the result.
+
+
+
+CODE:
+int removeElement(int* nums, int numsSize, int val) {
+    int i = 0;
+    int n = numsSize;
+
+    while (i < n) {
+        if (nums[i] == val) {
+            nums[i] = nums[n - 1]; 
+            n--; 
+        } else {
+            i++; 
+        }
+    }
+    return n;
+}
