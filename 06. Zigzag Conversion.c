@@ -1,3 +1,4 @@
+/*
 QUESTION:
 The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
 P   A   H   N
@@ -14,9 +15,8 @@ APPROACH:
    1.Append each character to the current row's string.
    2.Change direction when you reach the top or bottom row.
 4.Concatenate all row strings to get the final result.
+*/
 
-
-CODE:
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
