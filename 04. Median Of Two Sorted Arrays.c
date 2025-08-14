@@ -1,3 +1,4 @@
+/*
 QUESTION:
 Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
 The overall run time complexity should be O(log (m+n)).
@@ -15,9 +16,8 @@ We can achieve this by:
 4.Then:
     If total length is even → median = (max(left1, left2) + min(right1, right2)) / 2
     If odd → median = max(left1, left2)
+*/
 
-
-CODE:
 #include <stdio.h>
 #include <limits.h> // For INT_MIN and INT_MAX
 
