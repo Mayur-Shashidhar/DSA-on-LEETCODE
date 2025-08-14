@@ -1,3 +1,4 @@
+/*
 QUESTION:
 You are given the heads of two sorted linked lists list1 and list2.
 Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.
@@ -17,10 +18,8 @@ Steps:
 3.Continue until one list is empty.
 4.Append the rest of the non-empty list to the merged list.
 5.Return dummy.next as the head of the merged list.
+*/
 
-
-
-CODE:
 #include <stdio.h>
 #include <stdlib.h>
 
