@@ -1,3 +1,4 @@
+/*
 QUESTION:
 Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
 A mapping of digits to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
@@ -11,10 +12,8 @@ We will use DFS / backtracking:
 3.Append each letter to the current path and recurse for the next digit.
 4.When we reach the end of the digits string, add the built combination to results.
 5.Handle empty input by returning an empty list immediately.
+*/
 
-
-
-CODE:
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
