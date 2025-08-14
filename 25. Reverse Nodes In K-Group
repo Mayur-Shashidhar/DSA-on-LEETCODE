@@ -25,22 +25,22 @@ Steps:
 
 
 CODE:
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 /**
- * Definition for singly-linked list.
+ * Definition for singly-linked list:
  * struct ListNode {
  *     int val;
  *     struct ListNode *next;
  * };
  */
 
-
 struct ListNode* reverseKGroup(struct ListNode* head, int k) {
+    // Quick return for trivial cases
     if (!head || k == 1) return head;
 
-    
+    // Step 1: Count total nodes in the list
     int count = 0;
     struct ListNode* curr = head;
     while (curr) {
@@ -48,25 +48,33 @@ struct ListNode* reverseKGroup(struct ListNode* head, int k) {
         curr = curr->next;
     }
 
+    // Step 2: Dummy node before head to handle head changes easily
     struct ListNode dummy;
     dummy.next = head;
-    struct ListNode* prevGroup = &dummy;
+    struct ListNode* prevGroup = &dummy; // Points to node before current group
 
+    // Step 3: Process while there are at least k nodes remaining
     while (count >= k) {
-        struct ListNode* curr = prevGroup->next;   
+        // Start of the group to reverse
+        struct ListNode* curr = prevGroup->next;
+        // Next node after curr (will be moved to front during reversal)
         struct ListNode* next = curr->next;
 
-       
+        // Reverse k nodes by repeated front-insert technique
         for (int i = 1; i < k; i++) {
-            curr->next = next->next;
-            next->next = prevGroup->next;
-            prevGroup->next = next;
-            next = curr->next;
+            // Remove 'next' from chain and insert after prevGroup
+            curr->next = next->next;         // Skip over 'next'
+            next->next = prevGroup->next;    // Point 'next' to group's head
+            prevGroup->next = next;          // Move 'next' to front of group
+            next = curr->next;               // Advance 'next'
         }
 
+        // Move prevGroup to end of this reversed group
         prevGroup = curr;
+        // Reduce count by k — processed one full group
         count -= k;
     }
 
+    // Step 4: Return new head (dummy.next might have changed)
     return dummy.next;
 }
