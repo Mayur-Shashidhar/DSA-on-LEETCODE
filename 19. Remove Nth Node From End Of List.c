@@ -1,3 +1,4 @@
+/*
 QUESTION:
 Given the head of a linked list, remove the nth node from the end of the list and return its head.
 
@@ -11,10 +12,8 @@ We can solve this in O(n) time with two pointers:
 4.Move both pointers one step at a time until fast reaches the end.
 5.Now, slow->next is the node to remove, so we set: slow->next = slow->next->next
 6.Return dummy->next as the new head.
+*/
 
-
-
-CODE:
 #include <stdio.h>
 #include <stdlib.h>
 
