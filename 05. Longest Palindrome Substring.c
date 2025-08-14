@@ -1,3 +1,4 @@
+/*
 QUESTION:
 Given a string s, return the longest palindromic substring in s.
 
@@ -13,9 +14,8 @@ Steps:
     2.Even length center (left = i, right = i+1)
 3.If the palindrome length from expansion is longer than the best found so far, update start and max length.
 4.Return s[start .. start+maxLen-1].
+*/
 
-
-CODE:
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h> // For malloc()
