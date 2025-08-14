@@ -1,3 +1,4 @@
+/*
 QUESTION:
 Given an integer x, return true if x is a palindrome, and false otherwise.
 
@@ -12,11 +13,8 @@ APPROACH:
 3.At the end:
     If total digits are even → x == reversedHalf
     If total digits are odd → x == reversedHalf / 10 (middle digit ignored)
+*/
 
-
-
-
-CODE:
 #include <stdio.h>
 #include <stdbool.h>
 
