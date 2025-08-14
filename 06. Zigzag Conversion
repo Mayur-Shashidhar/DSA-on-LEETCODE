@@ -23,44 +23,55 @@ CODE:
 
 char* convert(char* s, int numRows) {
     int len = strlen(s);
+
+    // Special case: if only one row OR rows >= length, zigzag is just the original string
     if (numRows == 1 || numRows >= len) {
         char* res = (char*)malloc((len + 1) * sizeof(char));
         strcpy(res, s);
         return res;
     }
-
     
+    // Allocate array of strings, one for each row
     char** rows = (char**)malloc(numRows * sizeof(char*));
+
+    // Array to track current length (number of chars) in each row
     int* lengths = (int*)calloc(numRows, sizeof(int)); 
+
+    // Allocate maximum possible size for each row (len + 1 for '\0')
     for (int i = 0; i < numRows; i++) {
         rows[i] = (char*)malloc((len + 1) * sizeof(char));
-        rows[i][0] = '\0';
+        rows[i][0] = '\0'; // Start each row as empty string
     }
 
-    int currRow = 0;
-    int goingDown = 0; 
-
+    int currRow = 0;      // Current row we are filling
+    int goingDown = 0;    // Direction flag: 1 → going down, 0 → going up
+    
+    // Iterate over all characters in s
     for (int i = 0; i < len; i++) {
-        int l = lengths[currRow];
-        rows[currRow][l] = s[i];
-        rows[currRow][l + 1] = '\0';
-        lengths[currRow]++;
+        int l = lengths[currRow];           // Current length of this row
+        rows[currRow][l] = s[i];            // Append char to this row
+        rows[currRow][l + 1] = '\0';        // Null-terminate string
+        lengths[currRow]++;                 // Update length
 
+        // If at first or last row, reverse the direction
         if (currRow == 0 || currRow == numRows - 1)
             goingDown = !goingDown;
+
+        // Move to next row based on direction
         currRow += goingDown ? 1 : -1;
     }
-
     
+    // Now concatenate all row strings into the final result
     char* result = (char*)malloc((len + 1) * sizeof(char));
     result[0] = '\0';
     for (int i = 0; i < numRows; i++) {
-        strcat(result, rows[i]);
-        free(rows[i]);
+        strcat(result, rows[i]);  // Append row to final string
+        free(rows[i]);            // Free row buffer
     }
 
+    // Free arrays used for book-keeping
     free(rows);
     free(lengths);
-    return result;
-}
 
+    return result; // Caller should free() after use
+}
