@@ -1,3 +1,4 @@
+/*
 QUESTION:
 Given an integer array nums of length n and an integer target, find three integers in nums such that the sum is closest to target.
 Return the sum of the three integers.
@@ -19,9 +20,8 @@ Steps:
     5.If sum > target → move right-- (we want a smaller sum).
     6.If sum == target → exact match found, return it immediately.
 3.Return the closest sum after the loop.
+*/
 
-
-CODE:
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
