@@ -1,3 +1,4 @@
+/*
 QUESTION:
 Seven different symbols represent Roman numerals with the following values:
 Symbol	Value
@@ -20,10 +21,8 @@ The easiest and most efficient approach is greedy:
 1.Maintain a list of known values and their corresponding Roman numerals in descending order.
 2.Start from the largest value and subtract as many as possible, appending the matching Roman numeral.
 3.Move to the next smaller value until num becomes 0.
+*/
 
-
-
-CODE:
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
