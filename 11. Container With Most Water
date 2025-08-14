@@ -16,20 +16,30 @@ This greedy two-pointer approach works in a single pass, O(n).
 
 CODE:
 #include <stdio.h>
+
 int maxArea(int* height, int heightSize) {
-    int left = 0;
-    int right = heightSize - 1;
-    int max_area = 0;
+    int left = 0;                  // Pointer at the start
+    int right = heightSize - 1;    // Pointer at the end
+    int max_area = 0;              // Track max area found so far
 
+    // Move the two pointers towards each other
     while (left < right) {
+        // Find the height of the smaller line
         int h = (height[left] < height[right]) ? height[left] : height[right];
+        // Width between the two lines
         int width = right - left;
+        // Calculate area
         int area = h * width;
-
+        // Update maximum if larger area found
         if (area > max_area)
             max_area = area;
-
         
+        /**
+         * Move the pointer pointing to the shorter line inward —
+         * because the height is limited by the shorter line,
+         * moving the taller one inward won't help get a bigger area,
+         * but moving the shorter one might find a taller line.
+         */
         if (height[left] < height[right])
             left++;
         else
