@@ -1,9 +1,9 @@
+/*
 QUESTION:
 Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same. Then return the number of unique elements in nums.
 Consider the number of unique elements of nums to be k, to get accepted, you need to do the following things:
   Change the array nums such that the first k elements of nums contain the unique elements in the order they were present in nums initially. The remaining elements of nums are not important as well as the size of nums.
   Return k.
-
 
 
 
@@ -16,7 +16,6 @@ We can use two indices to overwrite duplicates:
 
 
 
-
 ALGORITHM:
 Start i = 0
 For each j from 1 to n-1:
@@ -24,10 +23,8 @@ For each j from 1 to n-1:
     Move i++
     Set nums[i] = nums[j]
 Return i + 1 as the count k (since i is index-based)
+*/
 
-
-
-CODE:
 #include<stdio.h>
 #include<stdlib.h>
 
