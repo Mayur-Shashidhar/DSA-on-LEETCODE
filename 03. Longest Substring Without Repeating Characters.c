@@ -12,7 +12,6 @@ Steps:
 5.Track maxLen as the max window length found so far.
 */
 
-
 #include <stdio.h>
 #include <string.h>
 
