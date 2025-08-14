@@ -1,3 +1,4 @@
+/*
 QUESTION:
 You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).
 Find two lines that together with the x-axis form a container, such that the container contains the most water.
@@ -12,9 +13,8 @@ Two-pointer approach:
 2.Calculate the area.
 3.Move the pointer pointing at the shorter line inward — because the limiting factor is the smaller height, and moving the taller line inward won't help increase area.
 This greedy two-pointer approach works in a single pass, O(n).
+*/
 
-
-CODE:
 #include <stdio.h>
 
 int maxArea(int* height, int heightSize) {
