@@ -1,3 +1,4 @@
+/*
 QUESTION:
 Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
 Symbol       Value
@@ -22,9 +23,8 @@ The idea is:
 2.Iterate through the string from left to right.
 3.If current value < next value, subtract it from the total (subtractive case like IV, IX).
 4.Else, add it to the total.
+*/
 
-
-CODE:
 #include <stdio.h>
 #include <string.h>
 
