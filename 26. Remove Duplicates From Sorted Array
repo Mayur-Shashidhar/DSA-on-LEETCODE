@@ -28,15 +28,24 @@ Return i + 1 as the count k (since i is index-based)
 
 
 CODE:
-int removeDuplicates(int* nums, int numsSize) {
-    if (numsSize == 0) return 0;
+#include<stdio.h>
+#include<stdlib.h>
 
-    int i = 0;
+int removeDuplicates(int* nums, int numsSize) {
+    if (numsSize == 0) return 0;  // No elements, return length 0
+
+    int i = 0; // Slow pointer: index for writing unique elements
+
+    // Fast pointer `j` scans through all elements
     for (int j = 1; j < numsSize; j++) {
+        // If current number is different from the last unique one
         if (nums[j] != nums[i]) {
-            i++;
-            nums[i] = nums[j];
+            i++;               // Move slow pointer forward
+            nums[i] = nums[j]; // Copy unique element into position i
         }
     }
-    return i + 1; 
+
+    // i is the index of the last unique element,
+    // so length = i + 1
+    return i + 1;
 }
