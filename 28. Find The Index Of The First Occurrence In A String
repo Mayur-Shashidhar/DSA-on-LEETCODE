@@ -16,17 +16,24 @@ If no match found → return -1.
 CODE:
 #include <string.h>
 
-int strStr(char * haystack, char * needle) {
-    int n = strlen(haystack);
-    int m = strlen(needle);
+int strStr(char *haystack, char *needle) {
+    int n = strlen(haystack);  // Length of haystack
+    int m = strlen(needle);    // Length of needle
 
-    if (m == 0) return 0; 
+    // If needle is empty, convention is to return 0
+    if (m == 0) return 0;
+
+    // Loop over each starting position where needle could fit
     for (int i = 0; i <= n - m; i++) {
         int j = 0;
+        // Check if substring starting at i matches needle
         while (j < m && haystack[i + j] == needle[j]) {
             j++;
         }
-        if (j == m) return i; 
+        // If we matched all characters of needle, return current index
+        if (j == m) return i;
     }
-    return -1; 
+
+    // No match found
+    return -1;
 }
