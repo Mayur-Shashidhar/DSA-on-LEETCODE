@@ -21,38 +21,48 @@ We’ll do range checking before actually multiplying and adding the next digit 
 
 CODE:
 #include <stdio.h>
-#include <limits.h>
-#include <ctype.h>  
+#include <limits.h>  // For INT_MAX and INT_MIN
+#include <ctype.h>   // For isspace() and isdigit()
 
 int myAtoi(char *s) {
-    int i = 0;
-    int sign = 1;
-    long result = 0;  
+    int i = 0;             // Current index in the string
+    int sign = 1;          // Sign of the number (+1 or -1)
+    long result = 0;       // Store result as long to detect overflow before returning
 
-    
+    // 1. Skip leading whitespace characters
     while (isspace((unsigned char)s[i])) {
         i++;
     }
-
     
+    // 2. Optional '+' or '-' sign
     if (s[i] == '+' || s[i] == '-') {
-        if (s[i] == '-') sign = -1;
+        if (s[i] == '-') 
+            sign = -1;  // Negative number
         i++;
     }
-
     
+    // 3. Convert digits to integer
     while (isdigit((unsigned char)s[i])) {
         int digit = s[i] - '0';
 
-        
+        /**
+         * Overflow detection:
+         * If result > (INT_MAX - digit) / 10, adding this digit will overflow.
+         * This works because:
+         *   result * 10 + digit > INT_MAX
+         * rearranges to:
+         *   result > (INT_MAX - digit) / 10
+         */
         if (result > (INT_MAX - digit) / 10) {
+            // Return clamped value on overflow
             return sign == 1 ? INT_MAX : INT_MIN;
         }
 
+        // Append digit to result
         result = result * 10 + digit;
         i++;
     }
 
+    // 4. Apply sign and return integer
     return (int)(result * sign);
 }
-
