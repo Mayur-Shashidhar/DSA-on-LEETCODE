@@ -22,15 +22,27 @@ CODE:
 
 bool isPalindrome(int x) {
     
+    // If negative OR ends with 0 but is not 0 → not a palindrome
     if (x < 0 || (x % 10 == 0 && x != 0))
         return false;
 
-    int reversedHalf = 0;
-    while (x > reversedHalf) {
-        reversedHalf = reversedHalf * 10 + x % 10;
-        x /= 10;
-    }
+    int reversedHalf = 0; // Stores reversed digits of the second half of x
 
+    /**
+     * We only reverse digits until reversedHalf ≥ x.
+     * At that point, we have processed half or more of the digits.
+     */
+    while (x > reversedHalf) {
+        reversedHalf = reversedHalf * 10 + (x % 10); // Add last digit to reversedHalf
+        x /= 10;  // Remove last digit from x
+    }
     
+    /**
+     * For even number of digits: x == reversedHalf
+     * For odd number of digits: x == reversedHalf / 10
+     *   Example: 12321
+     *     -> After loop: x = 12, reversedHalf = 123
+     *     -> Middle digit (3) doesn't matter, so divide reversedHalf by 10
+     */
     return (x == reversedHalf) || (x == reversedHalf / 10);
 }
