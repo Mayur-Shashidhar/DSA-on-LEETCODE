@@ -12,9 +12,8 @@ APPROACH:
     3.Create a new node with sum % 10.
     4.Update carry to sum / 10.
 5.After processing both lists, if there's a remaining carry, add a new node for it.
+*/
 
-
-CODE:*/
 #include <stdio.h>
 #include <stdlib.h>
 
