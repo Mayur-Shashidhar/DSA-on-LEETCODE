@@ -1,3 +1,4 @@
+/*
 QUESTION:
 Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
 
@@ -16,10 +17,8 @@ Base case: when left == n and right == n → we have a valid combination → sto
 Choices:
     If left < n, we can add '('
     If right < left, we can add ')'
+*/
 
-
-
-CODE:
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
