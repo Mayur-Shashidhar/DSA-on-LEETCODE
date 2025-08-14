@@ -1,3 +1,4 @@
+/*
 QUESTION:
 Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The order of the elements may be changed. Then return the number of elements in nums which are not equal to val.
 Consider the number of elements in nums which are not equal to val be k, to get accepted, you need to do the following things:
@@ -19,10 +20,8 @@ Since we don’t care about the order of the remaining elements, the most optima
     Else → i++ (move to next element)
 3.At the end, n is the count of elements not equal to val.
 4.The first n elements of nums are the result.
+*/
 
-
-
-CODE:
 #include<stdio.h>
 
 int removeElement(int* nums, int numsSize, int val) {
