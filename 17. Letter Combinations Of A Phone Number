@@ -19,49 +19,76 @@ CODE:
 #include <stdlib.h>
 #include <string.h>
 
-
+// Mapping digits to corresponding letters on a phone keypad
+// Index corresponds to digit character '0'..'9'
 char *mapping[] = {
-    "",     "",     "abc",  "def",
-    "ghi",  "jkl",  "mno",  "pqrs",
-    "tuv",  "wxyz"
+    "",     "",     "abc",  "def",   // 0, 1, 2, 3
+    "ghi",  "jkl",  "mno",  "pqrs",  // 4, 5, 6, 7
+    "tuv",  "wxyz"                  // 8, 9
 };
 
+/**
+ * backtrack - Builds all possible combinations by exploring each letter choice.
+ *
+ * @digits: Input digit string (e.g., "23")
+ * @index: Current position in digits we are processing
+ * @current: Buffer holding the current partial combination
+ * @result: Array of result strings (all combinations)
+ * @returnSize: Pointer to integer tracking how many combinations are stored
+ */
 void backtrack(char *digits, int index, char *current, char **result, int *returnSize) {
+    // Base case: if we've processed all digits
     if (digits[index] == '\0') {  
-        current[index] = '\0';
-        result[*returnSize] = strdup(current); 
-        (*returnSize)++;
+        current[index] = '\0';                 // Null-terminate the current combination
+        result[*returnSize] = strdup(current); // Copy the current combination into result array
+        (*returnSize)++;                       // Increase number of combinations found
         return;
     }
 
+    // Get the possible letters for the current digit
     char *letters = mapping[digits[index] - '0'];
+
+    // Try each letter for this position
     for (int i = 0; letters[i] != '\0'; i++) {
-        current[index] = letters[i];
-        backtrack(digits, index + 1, current, result, returnSize);
+        current[index] = letters[i]; // Place chosen letter in current position
+        backtrack(digits, index + 1, current, result, returnSize); // Recurse to next digit
     }
 }
 
 char **letterCombinations(char *digits, int *returnSize) {
     *returnSize = 0;
+
+    // Edge case: empty input → no combinations
     if (digits == NULL || *digits == '\0') {
         return NULL;
     }
 
     int len = strlen(digits);
-    
+
+    // Compute the maximum number of combinations possible based on keypad mapping
     int maxComb = 1;
     for (int i = 0; i < len; i++) {
         if (digits[i] == '7' || digits[i] == '9')
-            maxComb *= 4;
+            maxComb *= 4;  // '7' and '9' have 4 letters
         else
-            maxComb *= 3;
+            maxComb *= 3;  // All other valid digits have 3 letters
     }
 
+    // Allocate result array
     char **result = (char **)malloc(maxComb * sizeof(char *));
-    char *current = (char *)malloc(len + 1);
+    if (!result) return NULL;
 
+    // Allocate buffer for current combination being built
+    char *current = (char *)malloc(len + 1);
+    if (!current) {
+        free(result);
+        return NULL;
+    }
+
+    // Recursively build combinations
     backtrack(digits, 0, current, result, returnSize);
 
-    free(current);
-    return result;
+    free(current); // Buffer no longer needed
+
+    return result; // Caller must free each string and the array itself
 }
