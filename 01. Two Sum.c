@@ -12,7 +12,6 @@ APPROACH:
 
 #include <stdlib.h> // For malloc()
 
-
 int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
     *returnSize = 2; // The result will always contain two indices
 
