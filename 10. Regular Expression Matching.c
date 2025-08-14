@@ -1,3 +1,4 @@
+/*
 QUESTION:
 Given an input string s and a pattern p, implement regular expression matching with support for '.' and '*' where:
 '.' Matches any single character.​​​​
@@ -10,9 +11,8 @@ APPROACH:
 Dynamic Programming
 We can solve this with 2D DP where:
 dp[i][j] means: Does the first i characters of string s match the first j characters of pattern p?
+*/
 
-
-CODE:
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
