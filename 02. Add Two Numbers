@@ -17,39 +17,51 @@ APPROACH:
 CODE:
 #include <stdio.h>
 #include <stdlib.h>
+
 /**
- * Definition for singly-linked list is already provided:
+ * Definition for singly-linked list:
  * struct ListNode {
- *     int val;
- *     struct ListNode *next;
+ *     int val;               // Value of the current node (a digit)
+ *     struct ListNode *next; // Pointer to the next node
  * };
  */
 
-struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
-    struct ListNode dummy;
-    dummy.next = NULL;
-    struct ListNode *tail = &dummy;
-    int carry = 0;
 
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+    struct ListNode dummy;      // Dummy head to simplify result list construction
+    dummy.next = NULL;          // Start with an empty list
+    struct ListNode *tail = &dummy; // Tail pointer to append nodes easily
+    int carry = 0;              // Carry for values over 9
+
+    // Continue looping while there are still nodes to process or a carry exists
     while (l1 != NULL || l2 != NULL || carry > 0) {
-        int sum = carry;
+        int sum = carry;        // Start sum with the carry from the previous step
+
+        // Add value from l1, if available
         if (l1 != NULL) {
             sum += l1->val;
-            l1 = l1->next;
+            l1 = l1->next;      // Move to the next node
         }
+
+        // Add value from l2, if available
         if (l2 != NULL) {
             sum += l2->val;
-            l2 = l2->next;
+            l2 = l2->next;      // Move to the next node
         }
+
+        // Determine the new carry (will be 1 if sum >= 10)
         carry = sum / 10;
 
+        // Create a new node with the digit value (sum modulo 10)
         struct ListNode* newNode = malloc(sizeof(struct ListNode));
         newNode->val = sum % 10;
         newNode->next = NULL;
 
+        // Append the new node to the result list
         tail->next = newNode;
-        tail = newNode;
+        tail = newNode; // Move the tail pointer forward
     }
 
+    // Return the next node of dummy (actual head of the result list)
     return dummy.next;
 }
