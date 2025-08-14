@@ -20,49 +20,91 @@ CODE:
 #include <string.h>
 #include <stdbool.h>
 
-
-int dp[31][31][31];
+// dp[i1][i2][len] caches results of helper(s1, s2, i1, i2, len):
+//   -1 = not computed yet
+//    0 = false, not a scramble
+//    1 = true, is a scramble
+int dp[31][31][31]; // Problem constraints: strings length ≤ 30
 
 bool isSameChars(const char *s1, const char *s2, int len) {
-    int count[26] = {0};
+    int count[26] = {0}; // Counts difference in char frequency
+
+    // Count freq of characters in s1 and subtract freq from s2
     for (int i = 0; i < len; i++) {
         count[s1[i] - 'a']++;
         count[s2[i] - 'a']--;
     }
+
+    // If any character count is non-zero, mismatch exists
     for (int i = 0; i < 26; i++)
         if (count[i] != 0) return false;
+
     return true;
 }
 
+/**
+ * helper - tests if s1[i1 : i1+len-1] is a scramble of s2[i2 : i2+len-1].
+ *
+ * @s1: First string
+ * @s2: Second string
+ * @i1: Starting index in s1
+ * @i2: Starting index in s2
+ * @len: Length of current substring to compare
+ *
+ * Uses:
+ *   - Memoization via dp[] to avoid recomputing overlapping subproblems.
+ *   - Recursive check by splitting into prefix/postfix pairs and testing
+ *     both "non-swap" and "swap" scenarios.
+ */
 bool helper(const char *s1, const char *s2, int i1, int i2, int len) {
+    // If already computed, return cached value
     if (dp[i1][i2][len] != -1)
         return dp[i1][i2][len];
 
-    
+    // Quick match: if substrings are identical, they are scrambles
     if (strncmp(s1 + i1, s2 + i2, len) == 0) {
         return dp[i1][i2][len] = 1;
     }
 
+    // Quick prune: if characters differ in frequency, can't be scrambles
     if (!isSameChars(s1 + i1, s2 + i2, len)) {
         return dp[i1][i2][len] = 0;
     }
 
+    // Try splitting at all possible points
     for (int k = 1; k < len; k++) {
-       
-        if (helper(s1, s2, i1, i2, k) && helper(s1, s2, i1 + k, i2 + k, len - k))
+        // 1. Case without swapping halves:
+        //    s1[0:k] with s2[0:k] AND s1[k:] with s2[k:]
+        if (helper(s1, s2, i1, i2, k) &&
+            helper(s1, s2, i1 + k, i2 + k, len - k))
             return dp[i1][i2][len] = 1;
-        
+
+        // 2. Case with swapping halves:
+        //    s1[0:k] with s2[len-k:] AND s1[k:] with s2[0:len-k]
         if (helper(s1, s2, i1, i2 + len - k, k) &&
             helper(s1, s2, i1 + k, i2, len - k))
             return dp[i1][i2][len] = 1;
     }
 
+    // If no split works, mark as false
     return dp[i1][i2][len] = 0;
 }
 
+/**
+ * isScramble - main function to check if s2 is a scramble of s1.
+ *
+ * @s1: First string
+ * @s2: Second string
+ *
+ * Return: true if s2 is a scramble of s1, false otherwise.
+ */
 bool isScramble(char *s1, char *s2) {
     int n = strlen(s1);
-    if (n != strlen(s2)) return false;
+    if (n != strlen(s2)) return false; // Different lengths → impossible
+
+    // Initialize memoization array with -1 (uncomputed)
     memset(dp, -1, sizeof(dp));
+
+    // Check from start for full length
     return helper(s1, s2, 0, 0, n);
 }
