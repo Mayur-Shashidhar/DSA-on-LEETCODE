@@ -1,3 +1,4 @@
+/*
 QUESTION:
 Given two strings needle and haystack, return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
 
@@ -10,10 +11,8 @@ We can simply check every possible starting position in haystack until:
   Compare the substring with needle.
 If they match → return index.
 If no match found → return -1.
+*/
 
-
-
-CODE:
 #include <string.h>
 
 int strStr(char *haystack, char *needle) {
