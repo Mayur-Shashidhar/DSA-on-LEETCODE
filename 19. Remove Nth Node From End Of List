@@ -18,42 +18,42 @@ CODE:
 #include <stdio.h>
 #include <stdlib.h>
 
-
 /**
- * Definition for singly-linked list.
+ * Definition for singly-linked list:
  * struct ListNode {
  *     int val;
  *     struct ListNode *next;
  * };
  */
 
-
 struct ListNode* removeNthFromEnd(struct ListNode* head, int n) {
-    struct ListNode dummy;
+    struct ListNode dummy;       // Dummy node to handle edge cases
     dummy.next = head;
 
     struct ListNode *fast = &dummy, *slow = &dummy;
 
-    
+    // Move `fast` n+1 steps ahead so there is a gap of n between fast & slow
     for (int i = 0; i <= n; i++) {
         fast = fast->next;
     }
-
     
+    // Move both fast and slow until fast reaches end
     while (fast != NULL) {
         fast = fast->next;
         slow = slow->next;
     }
-
     
-    struct ListNode* temp = slow->next;
-    slow->next = slow->next->next;
-    free(temp);
+    // slow is now immediately before the node to remove
+    struct ListNode* temp = slow->next;         // Node to delete
+    slow->next = slow->next->next;              // Bypass the node
+    free(temp);                                 // Free memory
 
-    return dummy.next;
+    return dummy.next; // Return possibly new head
 }
 
-
+/**
+ * createNode - Allocates and initializes a new list node
+ */
 struct ListNode* createNode(int val) {
     struct ListNode* node = (struct ListNode*)malloc(sizeof(struct ListNode));
     node->val = val;
@@ -61,7 +61,9 @@ struct ListNode* createNode(int val) {
     return node;
 }
 
-
+/**
+ * printList - Prints a linked list in "val -> val -> ... -> NULL" format
+ */
 void printList(struct ListNode* head) {
     while (head) {
         printf("%d -> ", head->val);
