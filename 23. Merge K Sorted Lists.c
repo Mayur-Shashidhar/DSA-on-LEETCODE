@@ -1,3 +1,4 @@
+/*
 QUESTION:
 You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.
 Merge all the linked-lists into one sorted linked-list and return it.
@@ -9,9 +10,8 @@ Min-Heap / Priority Queue – O(n·log k)
 1.Put the head of each list in a min-heap (priority queue) based on node value.
 2.Repeatedly pop the smallest node, then push its next node.
 3.Very clean and efficient.
+*/
 
-
-CODE:
 #include <stdio.h>
 #include <stdlib.h>
 
