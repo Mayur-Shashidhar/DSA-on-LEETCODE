@@ -22,25 +22,36 @@ CODE:
 #include <stdbool.h>
 #include <string.h>
 
-bool isValid(char * s) {
+bool isValid(char *s) {
+    // Create a stack to hold opening brackets
+    // Size = length of s (max stack depth = num of chars in s)
     char stack[strlen(s)];
-    int top = -1;
+    int top = -1; // Stack pointer (-1 means empty stack)
 
+    // Iterate over each character in the string
     for (int i = 0; s[i] != '\0'; i++) {
         char c = s[i];
         
+        // If it's an opening bracket, push to stack
         if (c == '(' || c == '{' || c == '[') {
-            stack[++top] = c; // push
-        } else {
-            if (top == -1) return false; // no matching open
+            stack[++top] = c;
+        } 
+        else { // It’s a closing bracket
+            if (top == -1) 
+                return false; // No matching opening → invalid
             
-            char topChar = stack[top--]; // pop
+            // Pop from stack
+            char topChar = stack[top--];
+
+            // Check if the popped opening matches the closing bracket
             if ((c == ')' && topChar != '(') ||
                 (c == '}' && topChar != '{') ||
                 (c == ']' && topChar != '[')) {
-                return false; // mismatch
+                return false; // Type mismatch → invalid
             }
         }
     }
-    return top == -1; // stack must be empty
+
+    // At the end, stack must be empty for a valid string
+    return top == -1;
 }
