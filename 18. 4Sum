@@ -22,36 +22,47 @@ CODE:
 #include <stdio.h>
 #include <stdlib.h>
 
-
+/**
+ * cmp - Comparison function for qsort (sort ascending).
+ */
 int cmp(const void *a, const void *b) {
     return (*(int*)a - *(int*)b);
 }
 
 int** fourSum(int* nums, int numsSize, int target, int* returnSize, int** returnColumnSizes) {
     *returnSize = 0;
+
+    // If fewer than 4 numbers, no quadruplet possible
     if (numsSize < 4) return NULL;
 
+    // Sort to allow two-pointer technique and easy duplicate skipping
     qsort(nums, numsSize, sizeof(int), cmp);
 
+    // Allocate overestimated capacity to store quadruplets
     int capacity = numsSize * numsSize; 
     int **res = (int**)malloc(capacity * sizeof(int*));
     *returnColumnSizes = (int*)malloc(capacity * sizeof(int));
 
+    // First loop: fix first number nums[i]
     for (int i = 0; i < numsSize - 3; i++) {
-        
+        // Skip duplicate values for first position
         if (i > 0 && nums[i] == nums[i - 1]) continue;
 
+        // Second loop: fix second number nums[j]
         for (int j = i + 1; j < numsSize - 2; j++) {
-            
+            // Skip duplicate values for second position
             if (j > i + 1 && nums[j] == nums[j - 1]) continue;
 
             int left = j + 1;
             int right = numsSize - 1;
 
+            // Two-pointer approach for the last two numbers
             while (left < right) {
-                long long sum = (long long)nums[i] + nums[j] + nums[left] + nums[right]; 
+                // Use long long to avoid integer overflow
+                long long sum = (long long)nums[i] + nums[j] + nums[left] + nums[right];
 
                 if (sum == target) {
+                    // Found a quadruplet
                     res[*returnSize] = (int*)malloc(4 * sizeof(int));
                     res[*returnSize][0] = nums[i];
                     res[*returnSize][1] = nums[j];
@@ -60,17 +71,21 @@ int** fourSum(int* nums, int numsSize, int target, int* returnSize, int** return
                     (*returnColumnSizes)[*returnSize] = 4;
                     (*returnSize)++;
 
-                    
+                    // Skip duplicates for third number
                     while (left < right && nums[left] == nums[left + 1]) left++;
+                    // Skip duplicates for fourth number
                     while (left < right && nums[right] == nums[right - 1]) right--;
 
+                    // Move pointers inward
                     left++;
                     right--;
                 }
                 else if (sum < target) {
+                    // Sum too small: move left pointer to increase sum
                     left++;
                 }
                 else {
+                    // Sum too large: move right pointer to decrease sum
                     right--;
                 }
             }
