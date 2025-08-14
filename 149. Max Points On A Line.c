@@ -1,3 +1,4 @@
+/*
 QUESTION:
 Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane, return the maximum number of points that lie on the same straight line.
 
@@ -16,10 +17,8 @@ APPROACH:
   3.Normalize signs so that dx is always positive for unique representation.
 6.For each reference point, the maximum count of a slope + overlap + 1 (the point itself) is the maximum points on a line passing through that point.
 7.Return the maximum of these maximum counts over all points.
+*/
 
-
-
-CODE:
 #include <stdio.h>
 #include <stdlib.h>
 
