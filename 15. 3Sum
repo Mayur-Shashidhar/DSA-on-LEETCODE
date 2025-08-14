@@ -23,52 +23,62 @@ CODE:
 #include <stdio.h>
 #include <stdlib.h>
 
-
+/**
+ * cmp - Comparison function for qsort to sort integers in ascending order.
+ */
 int cmp(const void *a, const void *b) {
     return (*(int*)a - *(int*)b);
 }
 
-
 int** threeSum(int* nums, int numsSize, int* returnSize, int** returnColumnSizes) {
-    *returnSize = 0;
-    if (numsSize < 3) return NULL;
+    *returnSize = 0; // Initially no triplets found
+    if (numsSize < 3) return NULL; // Fewer than 3 numbers → no triplet possible
 
+    // Sort the array — necessary for the two-pointer technique and duplicate skipping
     qsort(nums, numsSize, sizeof(int), cmp);
-
     
+    // Allocate maximum possible capacity (over-allocated for simplicity)
     int capacity = numsSize * numsSize;
     int **res = (int**)malloc(capacity * sizeof(int*));
     *returnColumnSizes = (int*)malloc(capacity * sizeof(int));
 
+    // Iterate over each number, treating nums[i] as the first number of the triplet
     for (int i = 0; i < numsSize - 2; i++) {
         
-        if (i > 0 && nums[i] == nums[i-1]) continue;
+        // Skip duplicates for the first number
+        if (i > 0 && nums[i] == nums[i - 1]) continue;
 
-        int left = i + 1;
-        int right = numsSize - 1;
+        int left = i + 1;              // Left pointer
+        int right = numsSize - 1;      // Right pointer
 
+        // Two-pointer search for remaining two numbers
         while (left < right) {
             int sum = nums[i] + nums[left] + nums[right];
+
             if (sum == 0) {
+                // Allocate memory for a triplet
                 res[*returnSize] = (int*)malloc(3 * sizeof(int));
                 res[*returnSize][0] = nums[i];
                 res[*returnSize][1] = nums[left];
                 res[*returnSize][2] = nums[right];
-                (*returnColumnSizes)[*returnSize] = 3;
+                (*returnColumnSizes)[*returnSize] = 3; // Each triplet has length 3
                 (*returnSize)++;
 
-                
-                while (left < right && nums[left] == nums[left+1]) left++;
-                
-                while (left < right && nums[right] == nums[right-1]) right--;
+                // Skip duplicates for left pointer
+                while (left < right && nums[left] == nums[left + 1]) left++;
+                // Skip duplicates for right pointer
+                while (left < right && nums[right] == nums[right - 1]) right--;
 
+                // Move both pointers inward after recording a triplet
                 left++;
                 right--;
             } 
             else if (sum < 0) {
+                // Sum too small → increase by moving left pointer right
                 left++;
             } 
             else {
+                // Sum too large → decrease by moving right pointer left
                 right--;
             }
         }
