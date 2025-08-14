@@ -23,17 +23,26 @@ Since we don’t care about the order of the remaining elements, the most optima
 
 
 CODE:
-int removeElement(int* nums, int numsSize, int val) {
-    int i = 0;
-    int n = numsSize;
+#include<stdio.h>
 
+int removeElement(int* nums, int numsSize, int val) {
+    int i = 0;        // Scanning index
+    int n = numsSize; // Logical array length after removals
+
+    // Loop until i reaches the current effective length
     while (i < n) {
         if (nums[i] == val) {
+            // Found the target value → replace it with the last element
             nums[i] = nums[n - 1]; 
+            // Reduce logical size (ignore the swapped-out tail element)
             n--; 
+            // Don't increment i here — we need to re-check the swapped-in element
         } else {
+            // Current element is fine → move to next
             i++; 
         }
     }
+
+    // n now holds the new length of the array
     return n;
 }
