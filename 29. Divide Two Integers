@@ -26,38 +26,47 @@ Steps:
 
 
 CODE:
-#include <limits.h>
+#include <limits.h> // For INT_MAX, INT_MIN
+#include <stdlib.h> // For llabs
 
 int divide(int dividend, int divisor) {
-    
+    // Handle overflow edge cases:
+    // INT_MIN / -1 would overflow 32-bit int → clamp to INT_MAX
     if (dividend == INT_MIN && divisor == -1) return INT_MAX;
+    // INT_MIN / 1 is just INT_MIN (no overflow, but handle separately for clarity)
     if (dividend == INT_MIN && divisor == 1) return INT_MIN;
     
-    
+    // Determine if the result should be negative (true if signs differ)
     int negative = (dividend < 0) ^ (divisor < 0);
-    
-    
+
+    // Convert both numbers to positive long long to avoid overflow during abs
     long long a = llabs((long long)dividend);
     long long b = llabs((long long)divisor);
     
     long long result = 0;
-    
+
+    // Repeat until dividend >= divisor
     while (a >= b) {
-        long long temp = b, multiple = 1;
+        long long temp = b;      // Current divisor multiple
+        long long multiple = 1;  // Corresponding multiple of divisor
+
+        // Keep doubling temp until it is the largest possible chunk <= a
+        // This maximizes subtraction step size and speeds up the process
         while (a >= (temp << 1)) {
-            temp <<= 1;
-            multiple <<= 1;
+            temp <<= 1;        // Double the divisor
+            multiple <<= 1;    // Double the multiple
         }
-        a -= temp;
-        result += multiple;
+
+        a -= temp;           // Subtract the chunked divisor from dividend
+        result += multiple;  // Add the corresponding multiple to result
     }
-    
-    
+
+    // Apply sign
     if (negative) result = -result;
-    
-    
+
+    // Clamp to 32-bit signed integer range
     if (result > INT_MAX) return INT_MAX;
     if (result < INT_MIN) return INT_MIN;
-    
+
     return (int)result;
 }
