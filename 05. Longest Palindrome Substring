@@ -18,37 +18,60 @@ Steps:
 CODE:
 #include <stdio.h>
 #include <string.h>
-
+#include <stdlib.h> // For malloc()
 
 int expandFromCenter(char *s, int left, int right) {
     int n = strlen(s);
+
+    // Expand as long as left and right are valid indices and characters match
     while (left >= 0 && right < n && s[left] == s[right]) {
         left--;
         right++;
     }
-    return right - left - 1;
+
+    // When loop exits, left & right are one step outside the valid palindrome bounds
+    return right - left - 1; // Length of the palindrome
 }
 
+/**
+ * longestPalindrome - Finds the longest palindromic substring in the given string using center expansion.
+ *
+ * @s: Input string
+ *
+ * Return: Dynamically allocated string containing the longest palindrome (caller must free).
+ */
 char* longestPalindrome(char *s) {
     int n = strlen(s);
-    if (n == 0) return "";
+    if (n == 0) return ""; // Empty string case
 
-    int start = 0, maxLen = 1;
+    int start = 0;   // Start index of the longest palindrome found so far
+    int maxLen = 1;  // Max length found so far (at least 1 char palindrome exists)
 
+    // Iterate over each character as potential center
     for (int i = 0; i < n; i++) {
-        int len1 = expandFromCenter(s, i, i);     
-        int len2 = expandFromCenter(s, i, i + 1); 
+        // Odd-length palindrome (center at i)
+        int len1 = expandFromCenter(s, i, i);
+
+        // Even-length palindrome (center between i and i+1)
+        int len2 = expandFromCenter(s, i, i + 1);
+
+        // Pick the longer palindrome length
         int len = (len1 > len2) ? len1 : len2;
 
+        // If found palindrome is longer, update start and maxLen
         if (len > maxLen) {
             maxLen = len;
-            start = i - (len - 1) / 2;
+            start = i - (len - 1) / 2; 
+            // Formula shifts the start back to the actual beginning
         }
     }
 
-    
+    // Allocate memory for result + terminating null
     char *res = (char*)malloc((maxLen + 1) * sizeof(char));
+
+    // Copy the palindrome substring into result
     strncpy(res, s + start, maxLen);
-    res[maxLen] = '\0';
-    return res;
+    res[maxLen] = '\0'; // Null-terminate
+
+    return res; // Caller must free() this
 }
