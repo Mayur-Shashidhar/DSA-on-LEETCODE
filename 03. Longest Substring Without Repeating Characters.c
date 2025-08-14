@@ -10,9 +10,9 @@ Steps:
 3.If the current char was seen inside the current window, move start to lastIndex[ch] + 1.
 4.Update lastIndex[ch] to the current index.
 5.Track maxLen as the max window length found so far.
+*/
 
 
-CODE:*/
 #include <stdio.h>
 #include <string.h>
 
