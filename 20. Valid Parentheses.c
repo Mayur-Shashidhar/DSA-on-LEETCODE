@@ -1,3 +1,4 @@
+/*
 QUESTION:
 Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
 An input string is valid if:
@@ -15,10 +16,8 @@ The stack data structure is perfect for this:
     1.If the stack is empty → invalid (no matching open).
     2.Pop from the stack and check if it matches the type of closing bracket.
 4.At the end, if the stack is empty, the string is valid, else invalid.
+*/
 
-
-
-CODE:
 #include <stdbool.h>
 #include <string.h>
 
