@@ -15,22 +15,38 @@ APPROACH:
 
 CODE:
 #include <stdio.h>
-#include <limits.h>
-int reverse(int x) {
-    int rev = 0;
-    while (x != 0) {
-        int pop = x % 10;
-        x /= 10;
-        
-    
-        if (rev > INT_MAX / 10 || (rev == INT_MAX / 10 && pop > 7))
-            return 0;
-        
-        if (rev < INT_MIN / 10 || (rev == INT_MIN / 10 && pop < -8))
-            return 0;
+#include <limits.h> // For INT_MAX and INT_MIN
 
+int reverse(int x) {
+    int rev = 0; // Will store the reversed number
+
+    // Process digits until x becomes 0
+    while (x != 0) {
+        int pop = x % 10; // Extract last digit (could be negative for negative x)
+        x /= 10;          // Remove last digit from x
+
+        /**
+         * Before multiplying rev by 10, check for overflow:
+         *
+         * For positive numbers:
+         *   If rev > INT_MAX / 10, multiplying by 10 would overflow.
+         *   If rev == INT_MAX / 10, adding a digit > 7 would overflow 
+         *   (since INT_MAX = 2147483647, last digit is 7).
+         *
+         * For negative numbers:
+         *   If rev < INT_MIN / 10, multiplying by 10 would underflow.
+         *   If rev == INT_MIN / 10, adding a digit < -8 would underflow
+         *   (since INT_MIN = -2147483648, last digit is -8).
+         */
+        if (rev > INT_MAX / 10 || (rev == INT_MAX / 10 && pop > 7))
+            return 0; // Overflow detected
+
+        if (rev < INT_MIN / 10 || (rev == INT_MIN / 10 && pop < -8))
+            return 0; // Underflow detected
+
+        // Push the digit to the right side of rev
         rev = rev * 10 + pop;
     }
-    return rev;
-}
 
+    return rev; // Return reversed integer
+}
