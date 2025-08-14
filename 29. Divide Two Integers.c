@@ -1,3 +1,4 @@
+/*
 QUESTION:
 Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.
 The integer division should truncate toward zero, which means losing its fractional part. For example, 8.345 would be truncated to 8, and -2.7335 would be truncated to -2.
@@ -22,10 +23,8 @@ Steps:
       Subtract it from dividend
       Add corresponding power-of-two multiple to result
 5.Apply sign and return
+*/
 
-
-
-CODE:
 #include <limits.h> // For INT_MAX, INT_MIN
 #include <stdlib.h> // For llabs
 
